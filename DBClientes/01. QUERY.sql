@@ -1,6 +1,9 @@
 ------------------------------------------------------------------------------------------
 -----------------------------------CREATE TABLE CLIENTES----------------------------------
 ------------------------------------------------------------------------------------------
+CREATE DATABASE Clientes
+
+USE Clientes
 
 CREATE TABLE Clientes(
     IdCliente INT PRIMARY KEY IDENTITY(1,1),
@@ -53,6 +56,8 @@ CREATE TABLE ClientesContactos(
 	InformacionContacto INT NOT NULL,
 	Descripcion NVARCHAR(250),
 	Principal BIT,
+	FechaRegistro DATETIME DEFAULT GETDATE(),
+	FechaModificacion DATETIME DEFAULT GETDATE(),
 	Estado BIT
 
 	FOREIGN KEY (IdCliente) REFERENCES Clientes(IdCliente)
@@ -65,11 +70,30 @@ CREATE TABLE ClientesDirecciones(
 	EstadoRegion INT,
 	Provincia INT,
 	Distrito INT,
-	Descripcion NVARCHAR(250),
+	Descripcion NVARCHAR(500),
 	Principal BIT,
+	FechaRegistro DATETIME DEFAULT GETDATE(),
+	FechaModificacion DATETIME DEFAULT GETDATE(),
 	Estado BIT
 
 	FOREIGN KEY (IdCliente) REFERENCES Clientes(IdCliente)
+)
+
+CREATE TABLE ClientesIngresos (
+    IdIngreso INT PRIMARY KEY IDENTITY(1,1),
+    IdCliente INT NOT NULL,
+	FuenteIngreso NVARCHAR(250) NOT NULL,
+    Empresa NVARCHAR(250),
+    Cargo NVARCHAR(250),
+    IngresoMensual DECIMAL(18, 2),
+    FechaInicioIngreso DATE,
+    TipoIngreso INT,
+    DescripcionIngreso NVARCHAR(500),
+    FechaRegistro DATETIME DEFAULT GETDATE(),
+    FechaModificacion DATETIME DEFAULT GETDATE(),
+	Estado BIT
+
+    FOREIGN KEY (IdCliente) REFERENCES Clientes(IdCliente)
 )
 
 CREATE TABLE CatalogoClientes(
